@@ -1,7 +1,7 @@
 import { locationService } from './services/location-service.js'
+import { locationService } from './services/location-service.js'
 
-
-console.log('locationService', locationService);
+console.log('locationService.loadFromStorage', locationService.loadFromStorage);
 
 var gGoogleMap;
 
@@ -13,6 +13,9 @@ window.onload = () => {
                 console.log('Map clicked', ev);
                 const placeName = prompt('Place name?')
                 console.log('Map clicked', placeName, ev.latLng.lat(), ev.latLng.lng());
+                var locMarker = addMarker({ lat: ev.latLng.lat(), lng: ev.latLng.lng() }, placeName);
+                //fun addToLoc(locMarker)
+
             });
         })
         .catch(console.log('INIT MAP ERROR'));
@@ -47,11 +50,11 @@ export function initMap(lat = 32.0749831, lng = 34.9120554) {
         })
 }
 
-function addMarker(loc) {
+function addMarker(loc, title = 'hello') {
     var marker = new google.maps.Marker({
         position: loc,
         map: gGoogleMap,
-        title: 'Hello World!'
+        title
     });
     return marker;
 }

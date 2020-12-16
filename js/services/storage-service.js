@@ -1,5 +1,6 @@
-export const loadLocationsFromStorage = {
-    loadFromStorage
+export const storageService = {
+    loadFromStorage,
+    saveToStorage
 }
 
 function loadFromStorage(key) {
