@@ -4,7 +4,8 @@ console.log('storageService', storageService);
 
 export const locationService = {
     getLocations, 
-    addLocationToStorage    
+    addLocationToStorage,
+    getUserLocations    
 }
 
 const STORAGE_KEY = 'myLocationsDB';
@@ -12,7 +13,7 @@ const STORAGE_KEY = 'myLocationsDB';
 
 const gLocations = getUserLocations();
 storageService.saveToStorage(STORAGE_KEY, gLocations)
-console.log('gLocations:', gLocations);
+// console.log('gLocations:', gLocations);
 
 function getUserLocations() {
     let userLocations = storageService.loadFromStorage(STORAGE_KEY);
@@ -29,3 +30,5 @@ function addLocationToStorage(newLocation){
     gLocations.push(newLocation);
     storageService.saveToStorage(STORAGE_KEY, gLocations)
 }
+
+
