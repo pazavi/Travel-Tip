@@ -3,7 +3,7 @@ export const mapController = {
     myLoc
 }
 
-console.log('locationService.loadFromStorage', locationService.loadFromStorage);
+// console.log('locationService.loadFromStorage', locationService.loadFromStorage);
 
 var gGoogleMap;
 
@@ -20,9 +20,13 @@ window.onload = () => {
                     // var locMarker = addMarker({ lat: ev.latLng.lat(), lng: ev.latLng.lng() }, placeName);
                 var newLocation = { lat: ev.latLng.lat(), lng: ev.latLng.lng(), name: placeName };
                 locationService.addLocationToStorage(newLocation);
+<<<<<<< HEAD
                 console.log('newLocation', newLocation)
                     // addNewLocation(newLocation);
                     //fun addToLoc(locMarker)
+=======
+                
+>>>>>>> 0a3686aa88bd36a25c25ecf8f8dc209d2a381549
 
 
             });
@@ -40,7 +44,9 @@ window.onload = () => {
     document.querySelector('.btn').addEventListener('click', (ev) => {
         console.log('Aha!', ev.target);
         panTo(35.6895, 139.6917);
-    })
+    });
+
+    renderLocationsTable();
 
 }
 
@@ -75,7 +81,7 @@ function panTo(lat, lng) {
 }
 
 function getUserPosition() {
-    console.log('Getting Pos');
+    // console.log('Getting Pos');
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject)
     })
@@ -89,7 +95,7 @@ function _connectGoogleApi() {
     elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
     elGoogleApi.async = true;
     document.body.append(elGoogleApi);
-    console.log('test!')
+    // console.log('test!')
 
     return new Promise((resolve, reject) => {
         elGoogleApi.onload = resolve;
@@ -97,6 +103,7 @@ function _connectGoogleApi() {
     })
 }
 
+<<<<<<< HEAD
 
 let infoWindow;
 
@@ -135,4 +142,17 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         "Error: Your browser doesn't support geolocation."
     );
     infoWindow.open(gGoogleMap);
+=======
+function renderLocationsTable() {
+    var locations = locationService.getUserLocations();
+    var strHTMLs = '<tr><th>Name</th><th>Latitude</th><th>Longitude</th><th colspan="2">Actions</th></tr>';
+    strHTMLs += locations.map(function (location) {
+        return `<tr> <td>${location.name}</td><td>${location.lat}</td><td>${location.lng}</td>
+        <td><button class="go-btn">Go</button></td><td><button class="delete-btn">Delete</button></td></tr>`
+
+    })
+
+    document.querySelector('table').innerHTML = strHTMLs;
+ 
+>>>>>>> 0a3686aa88bd36a25c25ecf8f8dc209d2a381549
 }
