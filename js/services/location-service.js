@@ -3,8 +3,8 @@ import { storageService } from '../services/storage-service.js'
 console.log('storageService', storageService);
 
 export const locationService = {
-    getLocations, 
-    addLocationToStorage    
+    getLocations,
+    addLocationToStorage
 }
 
 const STORAGE_KEY = 'myLocationsDB';
@@ -25,7 +25,8 @@ function getLocations() {
     return Promise.resolve(gLocations)
 }
 
-function addLocationToStorage(newLocation){
+function addLocationToStorage(newLocation) {
     gLocations.push(newLocation);
+    console.log(gLocations);
     storageService.saveToStorage(STORAGE_KEY, gLocations)
 }

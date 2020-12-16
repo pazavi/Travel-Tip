@@ -1,24 +1,29 @@
 import { locationService } from './services/location-service.js'
-
+export const mapController = {
+    myLoc
+}
 
 console.log('locationService.loadFromStorage', locationService.loadFromStorage);
 
 var gGoogleMap;
 
+
 window.onload = () => {
     initMap()
         .then(() => {
             addMarker({ lat: 32.0749831, lng: 34.9120554 });
+            document.querySelector('.myLoc').onclick = myLoc;
             gGoogleMap.addListener('click', (ev) => { ///when Map clicked
                 console.log('Map clicked', ev);
                 const placeName = prompt('Place name?')
-                // console.log('Map clicked', placeName, ev.latLng.lat(), ev.latLng.lng());
-                var locMarker = addMarker({ lat: ev.latLng.lat(), lng: ev.latLng.lng() }, placeName);
+                    // console.log('Map clicked', placeName, ev.latLng.lat(), ev.latLng.lng());
+                    // var locMarker = addMarker({ lat: ev.latLng.lat(), lng: ev.latLng.lng() }, placeName);
                 var newLocation = { lat: ev.latLng.lat(), lng: ev.latLng.lng(), name: placeName };
                 locationService.addLocationToStorage(newLocation);
-                console.log ('newLocation', newLocation)
-                // addNewLocation(newLocation);
-                //fun addToLoc(locMarker)
+                console.log('newLocation', newLocation)
+                    // addNewLocation(newLocation);
+                    //fun addToLoc(locMarker)
+
 
             });
         })
@@ -47,9 +52,10 @@ export function initMap(lat = 32.0749831, lng = 34.9120554) {
             console.log('google available');
             gGoogleMap = new google.maps.Map(
                 document.querySelector('#map'), {
-                center: { lat, lng },
-                zoom: 15
-            })
+                    center: { lat, lng },
+                    zoom: 15
+                })
+            myLoc()
             console.log('Map!', gGoogleMap);
         })
 }
@@ -89,4 +95,44 @@ function _connectGoogleApi() {
         elGoogleApi.onload = resolve;
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
+}
+
+
+let infoWindow;
+
+function myLoc() {
+
+    infoWindow = new google.maps.InfoWindow();
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                infoWindow.setPosition(pos);
+                infoWindow.setContent("Location found.");
+                infoWindow.open(gGoogleMap);
+                gGoogleMap.setCenter(pos);
+            },
+            () => {
+                handleLocationError(true, infoWindow, gGoogleMap.getCenter());
+            }
+        );
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, gGoogleMap.getCenter());
+    }
+
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(
+        browserHasGeolocation ?
+        "Error: The Geolocation service failed." :
+        "Error: Your browser doesn't support geolocation."
+    );
+    infoWindow.open(gGoogleMap);
 }
