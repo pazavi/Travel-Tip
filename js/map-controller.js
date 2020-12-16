@@ -1,6 +1,5 @@
 
-import {locationService} from './services/location-service.js'
-const API_KEY = 'AIzaSyBxG0--DM1fZRSmLwQPjlcVXJ7gVcex_KQ'
+import { locationService } from './services/location-service.js'
 
 
 console.log('locationService', locationService);
@@ -67,11 +66,12 @@ function getUserPosition() {
 
 function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
-    const API_KEY = ''; //TODO: Enter your API Key
+    const API_KEY = 'AIzaSyBxG0--DM1fZRSmLwQPjlcVXJ7gVcex_KQ'; 
     var elGoogleApi = document.createElement('script');
-    elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBxG0--DM1fZRSmLwQPjlcVXJ7gVcex_KQ`;
+    elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
     elGoogleApi.async = true;
     document.body.append(elGoogleApi);
+    console.log('test!')
 
     return new Promise((resolve, reject) => {
         elGoogleApi.onload = resolve;
