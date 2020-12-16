@@ -13,7 +13,7 @@ const  gLocations = getUserLocations();
 console.log ('gLocations:', gLocations);
 
 function getUserLocations(){
-    let userLocations = loadFromStorage(STORAGE_KEY);
+    let userLocations = loadLocationsFromStorage.loadFromStorage(STORAGE_KEY);
     if (!userLocations) userLocations = [{lat: 17, lng: 19, name: 'Puki Home'}];
     return userLocations;
 }
