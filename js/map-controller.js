@@ -1,5 +1,5 @@
 import { locationService } from './services/location-service.js'
-import { locationService } from './services/location-service.js'
+
 
 console.log('locationService.loadFromStorage', locationService.loadFromStorage);
 
@@ -12,8 +12,12 @@ window.onload = () => {
             gGoogleMap.addListener('click', (ev) => { ///when Map clicked
                 console.log('Map clicked', ev);
                 const placeName = prompt('Place name?')
-                console.log('Map clicked', placeName, ev.latLng.lat(), ev.latLng.lng());
+                // console.log('Map clicked', placeName, ev.latLng.lat(), ev.latLng.lng());
                 var locMarker = addMarker({ lat: ev.latLng.lat(), lng: ev.latLng.lng() }, placeName);
+                var newLocation = { lat: ev.latLng.lat(), lng: ev.latLng.lng(), name: placeName };
+                locationService.addLocationToStorage(newLocation);
+                console.log ('newLocation', newLocation)
+                // addNewLocation(newLocation);
                 //fun addToLoc(locMarker)
 
             });
@@ -43,9 +47,9 @@ export function initMap(lat = 32.0749831, lng = 34.9120554) {
             console.log('google available');
             gGoogleMap = new google.maps.Map(
                 document.querySelector('#map'), {
-                    center: { lat, lng },
-                    zoom: 15
-                })
+                center: { lat, lng },
+                zoom: 15
+            })
             console.log('Map!', gGoogleMap);
         })
 }
